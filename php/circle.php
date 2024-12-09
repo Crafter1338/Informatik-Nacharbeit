@@ -11,7 +11,7 @@
 
     http_response_code(200);
 
-    $area = ($r^2) * 3.141;
+    $area = ($r ** 2) * 3.141;
     $circumference = 6.283 * $r;
 
     $response = [

@@ -27,8 +27,13 @@
                     <div style="width:100%; height:100%; align-content:center;">
 
                         <div style = "margin:0;padding:0; display:grid; justify-content:center">
-                            <div class = "input_field except">Angaben:</div>
-                            <input name = "r" placeholder = "Radius R" class = "input_field" id = "r">
+                            <input name = "r" placeholder = "Radius R" class = "input_field except" id = "r">
+
+                            <select name = "fraction_digits" id = "fraction_digits" class = "input_field">
+                                <option value=1>1 Nachkommastelle</option>
+                                <option value=2>2 Nachkommastellen</option>
+                                <option value=3>3 Nachkommastellen</option>
+                            </select>
 
                             <select name = "unit" id = "unit" class = "input_field">
                                 <option value="cm">cm</option>
@@ -63,12 +68,14 @@
             
             // helpers 
             function update_results(area, circumference){
-                document.getElementById("area").innerHTML = `Fl&#228cheninhalt: ${area} ${document.getElementById("unit").value}&#178`;
-                document.getElementById("circumference").innerHTML = `Umfang: ${circumference} ${document.getElementById("unit").value}`;
+                const fraction_digits = document.getElementById("fraction_digits").value;
+
+                document.getElementById("area").innerHTML = `Fl&#228cheninhalt: ${area.toFixed(fraction_digits)} ${document.getElementById("unit").value}&#178`;
+                document.getElementById("circumference").innerHTML = `Umfang: ${circumference.toFixed(fraction_digits)} ${document.getElementById("unit").value}`;
             }
 
             function get_results(){
-                let r = parseInt(document.getElementById("r").value) || 0;
+                let r = parseFloat(document.getElementById("r").value) || 0;
 
                 var xml = http("GET", `/php/circle.php?r=${r}`);
 
@@ -87,6 +94,10 @@
             }
 
             document.getElementById("unit").oninput = () => {
+                update_results(last_results.area, last_results.circumference);
+            }
+
+            document.getElementById("fraction_digits").oninput = () => {
                 update_results(last_results.area, last_results.circumference);
             }
 

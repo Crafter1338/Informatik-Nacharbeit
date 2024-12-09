@@ -68,8 +68,10 @@
             }
 
             function get_results(){
-                let a = parseInt(document.getElementById("a").value) || 0;
-                let b = parseInt(document.getElementById("b").value) || 0;
+                let a = parseFloat(document.getElementById("a").value) || 0;
+                let b = parseFloat(document.getElementById("b").value) || 0;
+
+                console.log(a,b)
 
                 var xml = http("GET", `/php/square.php?a=${a}&b=${b}`);
 
