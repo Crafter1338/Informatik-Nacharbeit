@@ -2,8 +2,8 @@
 <html>
     <head>
         <title>Registrierung</title>
-        <link rel = "stylesheet" href = "style.css">
-        <link rel = "stylesheet" href = "register.css">
+        <link rel = "stylesheet" href = "css/style.css">
+        <link rel = "stylesheet" href = "css/register.css">
     </head>
 
     <body>
@@ -18,6 +18,7 @@
                 <button id = "href_login">Anmelden</button>
                 <button id = "href_register">Registrieren</button>
                 <button id = "href_square">Rechtecksrechner</button>
+                <button id = "href_circle">Kreisrechner</button>
                 <button id = "href_history">Verlauf</button>
             </div>
 
@@ -33,15 +34,9 @@
         </div>
 
         <script src="./authentication.js"></script>
+        <script src="./button_handles.js"></script>
         <script>
             let user;
-
-            // button handles
-            document.getElementById("href_register").onclick    = () => {window.location.href = "register.html"}
-            document.getElementById("href_login").onclick       = () => {window.location.href = "login.html"}
-            document.getElementById("href_homepage").onclick    = () => {window.location.href = "index.html"}
-            document.getElementById("href_square").onclick      = () => {window.location.href = "square.html"}
-            document.getElementById("href_history").onclick     = () => {window.location.href = "history.html"}
 
             // code:
             document.getElementById("submit").onclick = () => {

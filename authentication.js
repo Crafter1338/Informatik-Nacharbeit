@@ -1,21 +1,30 @@
 // helpers
-function http(method, url){
+function async_http(method, url, callback){
     var xml = new XMLHttpRequest();
+    xml.open(method, url, true);
     xml.onreadystatechange = function() {
         if (this.readyState == 4) {
-            return xml;
+            callback(xml.status, xml);
         }
     };
 
-    xml.open(method, url, true);
     xml.send();
 }
 
+function http(method, url){
+    var xml = new XMLHttpRequest();
+    xml.open(method, url, false);
+    xml.send();
+
+    return xml;
+}
+
 function check_user(name){
-    var xml = http("GET", `/users?name=${name}`);
+    var xml = http("GET", `/php/users.php?name=${name}`);
 
     if (xml.status == 200){
-        return JSON.parse(xml.response.user), xml.response.token;
+        const response = JSON.parse(xml.responseText)
+        return response.user, response.token;
     } else {return null, null}
 }
 
@@ -28,7 +37,7 @@ function get_user(name, pass){
         is_token = true;
     }
 
-    var xml = http("GET", `/users?name=${name}`);
+    var xml = http("GET", `/php/users.php?name=${name}`);
 
     if (xml.status == 200){
         return true;
@@ -39,9 +48,10 @@ function new_user(name, pass){
     if (!(name && pass)) {return}
     if (check_user(name)) {return}
 
-    var xml = http("POST", `/users?name=${name}&pass=${pass}`);
+    var xml = http("POST", `/php/users.php?name=${name}&pass=${pass}`);
 
     if (xml.status == 200){
-        return JSON.parse(xml.response.user), xml.response.token;
+        const response = JSON.parse(xml.responseText)
+        return response.user, response.token;
     } else {return null, null}
 }

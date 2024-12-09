@@ -27,8 +27,8 @@
                     <div style="width:100%; height:100%; align-content:center;">
 
                         <div style = "margin:0;padding:0; display:grid; justify-content:center">
-                            <input name = "a" placeholder = "Seite A" class = "input_field except" id = "a">
-                            <input name = "b" placeholder = "Seite B" class = "input_field" id = "b">
+                            <div class = "input_field except">Angaben:</div>
+                            <input name = "r" placeholder = "Radius R" class = "input_field" id = "r">
 
                             <select name = "unit" id = "unit" class = "input_field">
                                 <option value="cm">cm</option>
@@ -60,7 +60,7 @@
                 area: 0,
                 circumference: 0,
             }
-
+            
             // helpers 
             function update_results(area, circumference){
                 document.getElementById("area").innerHTML = `Fl&#228cheninhalt: ${area} ${document.getElementById("unit").value}&#178`;
@@ -68,10 +68,9 @@
             }
 
             function get_results(){
-                let a = parseInt(document.getElementById("a").value) || 0;
-                let b = parseInt(document.getElementById("b").value) || 0;
+                let r = parseInt(document.getElementById("r").value) || 0;
 
-                var xml = http("GET", `/php/square.php?a=${a}&b=${b}`);
+                var xml = http("GET", `/php/circle.php?r=${r}`);
 
                 if (xml.status == 200){
                     const results = JSON.parse(xml.response).results;
@@ -82,12 +81,7 @@
             }
 
             // change handles
-            document.getElementById("a").oninput = () => {
-                last_results = get_results();
-                update_results(last_results.area, last_results.circumference);
-            }
-
-            document.getElementById("b").oninput = () => {
+            document.getElementById("r").oninput = () => {
                 last_results = get_results();
                 update_results(last_results.area, last_results.circumference);
             }
