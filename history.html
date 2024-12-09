@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Homepage</title>
+        <link rel = "stylesheet" href = "style.css">
+    </head>
+
+    <body>
+        <div class = "topbar">
+            <div class = "left">Verlauf</div>
+            <div class = "right" id = "user">Nicht Angemeldet</div>
+        </div>
+
+        <div class = "site">
+            <div class = "sidebar">
+                <button id = "href_homepage">Home</button>
+                <button id = "href_login">Anmelden</button>
+                <button id = "href_register">Registrieren</button>
+                <button id = "href_square">Rechtecksrechner</button>
+                <button id = "href_history">Verlauf</button>
+            </div>
+
+            <div class = "mainframe">
+                <div style ="margin:2vh">
+                    Hier wird evtl. irgendwann ein Verlauf angezeigt.
+                    <p>Wer weiß was noch alles passiert!</p>
+                </div>
+            </div>
+        </div>
+
+        <script src="./authentication.js"></script>
+        <script>
+            let user;
+
+            // button handles
+            document.getElementById("href_register").onclick    = () => {window.location.href = "register.html"}
+            document.getElementById("href_login").onclick       = () => {window.location.href = "login.html"}
+            document.getElementById("href_homepage").onclick    = () => {window.location.href = "index.html"}
+            document.getElementById("href_square").onclick      = () => {window.location.href = "square.html"}
+            document.getElementById("href_history").onclick     = () => {window.location.href = "history.html"}
+
+            // code:
+            user = get_user();
+
+            if (user){
+                document.getElementById("user").innerHTML = user.name;
+            } else {
+                document.getElementById("user").innerHTML = "Nicht Angemeldet";
+            }
+        </script>
+    </body>
+</html>

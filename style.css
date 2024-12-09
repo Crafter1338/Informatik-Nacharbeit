@@ -1,0 +1,63 @@
+:root{
+    --background: rgb(20,20,20);
+    --accent: rgb(85, 121, 189);
+    --text: rgb(252, 252, 252);
+    --background-accent: rgb(30,30,30);
+    --gray-text: rgb(105, 105, 105);
+}
+
+body {background-color: var(--background); margin: 0; font-family: sans-serif; color: var(--text); height: 100%; user-select: none;}
+
+.topbar {
+    background-color: var(--accent);
+    height:8vh;
+    width: 100%;
+    display:inline-flex;
+    font-size: 1.5em;
+}
+
+.topbar .left {margin-left: 1vw; width: 100%; align-content: center}
+.topbar .right {margin-right: 1vw; width: 100%; align-content: center; text-align: right;}
+
+.site {display:flex}
+
+.sidebar {
+    display: grid;
+    background-color: var(--background-accent);
+    margin: 2vh;
+    margin-right: 1vh;
+    border-radius: 0.5em;
+
+    width: 20%;
+    height: 100%;
+
+    padding-bottom: 2vh;
+}
+
+.sidebar button {
+    justify-self: center;
+    margin-top: 2vh;
+    width: 80%;
+    height: 4vh;
+
+    background-color: var(--accent);
+    color: var(--text);
+    font-size: 1em;
+
+    border: none;
+    border-radius: 0.3em;
+
+    text-align: left;
+    padding-left: 1vw;
+}
+
+.mainframe {
+    display:block;
+    width: 100%;
+    height: 40vh;
+
+    background-color: var(--background-accent);
+    margin: 2vh;
+    margin-left: 1vh;
+    border-radius: 0.5em;
+}

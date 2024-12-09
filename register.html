@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Registrierung</title>
+        <link rel = "stylesheet" href = "style.css">
+        <link rel = "stylesheet" href = "register.css">
+    </head>
+
+    <body>
+        <div class = "topbar">
+            <div class = "left">Registrierung</div>
+            <div class = "right">#MadeWithLove</div>
+        </div>
+
+        <div class = "site">
+            <div class = "sidebar">
+                <button id = "href_homepage">Home</button>
+                <button id = "href_login">Anmelden</button>
+                <button id = "href_register">Registrieren</button>
+                <button id = "href_square">Rechtecksrechner</button>
+                <button id = "href_history">Verlauf</button>
+            </div>
+
+            <div class = "mainframe">
+                <div style = "width:100%; height:100%; align-content:center;">
+                    <div style = "margin:0;padding:0;display:grid;justify-content:center">
+                        <input name = "name" placeholder = "Name" class = "input_field except" id = "name">
+                        <input name = "pass" type = "password" placeholder = "Passwort" class = "input_field" id = "pass">
+                        <input class = "input_field" type = "submit" value = "Registrieren" style = "text-align: center; padding-left:0" id = "submit">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="./authentication.js"></script>
+        <script>
+            let user;
+
+            // button handles
+            document.getElementById("href_register").onclick    = () => {window.location.href = "register.html"}
+            document.getElementById("href_login").onclick       = () => {window.location.href = "login.html"}
+            document.getElementById("href_homepage").onclick    = () => {window.location.href = "index.html"}
+            document.getElementById("href_square").onclick      = () => {window.location.href = "square.html"}
+            document.getElementById("href_history").onclick     = () => {window.location.href = "history.html"}
+
+            // code:
+            document.getElementById("submit").onclick = () => {
+                let user, token = new_user(document.getElementById("name").value, document.getElementById("pass").value)
+
+                if (!user){return}
+
+                localStorage.setItem(name, user.name);
+                localStorage.setItem(token, token);
+
+                window.location.href = "index.html";
+            }
+        </script>
+    </body>
+</html>
