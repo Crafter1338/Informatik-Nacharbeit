@@ -1,0 +1,33 @@
+.title {
+    padding-left: 2vh;
+    text-align: left;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+
+    font-size: 1.2em;
+
+    color: var(--text-accent);
+}
+
+.setting-container {
+    display: grid;
+
+    grid-template-columns: auto auto;
+    column-gap: .5vw;
+    row-gap: .5vw;
+
+    margin-left: 2vh;
+    margin-right: 2vh;
+}
+
+.setting-item{
+    background-color: var(--background-accent);
+    border: none;
+    color: var(--text);
+
+    font-size: 1em;
+}
+
+.gray {
+    color: var(--gray-text)
+}

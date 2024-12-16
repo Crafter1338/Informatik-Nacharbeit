@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Rechtecksrechner</title>
-        <link rel = "stylesheet" href = "css/style.css">
-        <link rel = "stylesheet" href = "css/square_style.css">
+        <title>Nico's Website</title>
+        <link rel = "stylesheet" href = "css/index.css">
+        <link rel = "stylesheet" href = "css/calculator.css">
     </head>
 
     <body>
@@ -15,45 +15,52 @@
         <div class = "site">
             <div class = "sidebar">
                 <button id = "href_homepage">Home</button>
-                <button id = "href_login">Anmelden</button>
-                <button id = "href_register">Registrieren</button>
-                <button id = "href_square">Rechtecksrechner</button>
-                <button id = "href_circle">Kreisrechner</button>
-                <button id = "href_history">Verlauf</button>
+                <button id = "href_square">Rechteck</button>
+                <button id = "href_circle">Kreis</button>
+                <button id = "href_cylinder">Zylinder</button>
             </div>
 
-            <div class = "mainframe">
+            <div class = "mainframe" style = "background-color: var(--background);">
                 <div style = "display:flex; height:100%">
-                    <div style="width:100%; height:100%; align-content:center;">
-
-                        <div style = "margin:0;padding:0; display:grid; justify-content:center">
-                            <input name = "a" placeholder = "Seite A" class = "input_field except" id = "a">
-                            <input name = "b" placeholder = "Seite B" class = "input_field" id = "b">
-
-                            <select name = "unit" id = "unit" class = "input_field">
-                                <option value="cm">cm</option>
-                                <option value="mm">mm</option>
-                                <option value="m">m</option>
-                            </select>
+                    <div style = "width:20%; height:100%; align-content:center;">
+                        <div style = "border-radius: 0.5em; height: 100%; margin-right:2vh; background: var(--background-accent)">
+                            <div class = "title">Einstellungen</div>
+                            
+                            <div class = "setting-container">
+                                <div class = "setting-item">Einheit Eingabe:</div> <select class = "setting-item" id = "input_unit"> <option value="cm">cm</option> <option value="mm">mm</option> <option value="m">m</option> </select>
+                                <div class = "setting-item">Einheit Ausgabe:</div> <select class = "setting-item" id = "output_unit"> <option value="cm">cm</option> <option value="mm">mm</option> <option value="m">m</option> </select>
+                                <div class = "setting-item">Pr&#228;zision:</div> <select class = "setting-item" id = "precision"> <option value=1>.0</option> <option value=2>.00</option> <option value=3>.000</option> </select>
+                            </div>
                         </div>
-
                     </div>
 
-                    <div style ="width:100%; height:100%; align-content:center;">
+                    <div style = "width:40%; height:100%; align-content:center">
+                        <div style = "border-radius: 0.5em; height: 100%; margin-right:2vh; background: var(--background-accent)">
+                            <div class = "title">Eingabe</div>
 
-                        <div style = "margin:0;padding:0; display:grid; justify-content:center">
-                            <div class = "input_field except">Ergebnisse:</div>
-                            <div class = "normal input_field" id = "area">Fl&#228cheninhalt:</div>
-                            <div class = "normal input_field" id = "circumference">Umfang:</div>
+                            <div class = "setting-container">
+                                <div class = "setting-item">Seite A:</div> <input class = "setting-item" id = "a" placeholder="Seitenl&#228;nge A">
+                                <div class = "setting-item">Seite B:</div> <input class = "setting-item" id = "b" placeholder="Seitenl&#228;nge B">
+                            </div>
                         </div>
-                        
+                    </div>
+
+                    <div style = "width:40%; height:100%; align-content:center">
+                        <div style = "border-radius: 0.5em; height: 100%; background: var(--background-accent)">
+                            <div class = "title">Ausgabe</div>
+                            
+                            <div class = "setting-container">
+                                <div class = "setting-item">Fl&#228;cheninhalt:</div> <div class = "setting-item" id = "area">0 cm&#178;</div>
+                                <div class = "setting-item">Umfang:</div> <div class = "setting-item" id = "circumference">0 cm</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <script src="./authentication.js"></script>
-        <script src="./button_handles.js"></script>
+        <script src="javascript/authentication.js"></script>
+        <script src="javascript/calculator_sidebar.js"></script>
         <script>
             let user;
             let last_results = {
@@ -61,19 +68,33 @@
                 circumference: 0,
             }
 
-            // helpers 
-            function update_results(area, circumference){
-                document.getElementById("area").innerHTML = `Fl&#228cheninhalt: ${area} ${document.getElementById("unit").value}&#178`;
-                document.getElementById("circumference").innerHTML = `Umfang: ${circumference} ${document.getElementById("unit").value}`;
+            const translation = {
+                "cm": {"mm": 10, "cm": 1, "m": 0.01},
+                "mm": {"mm": 1, "cm": 0.1, "m": 0.001},
+                "m": {"mm": 1000, "cm": 100, "m": 0.01}
             }
 
+            // helpers 
+            function update_results(area, circumference){
+                const precision = document.getElementById("precision").value;
+
+                area = area * translation[document.getElementById("input_unit").value][document.getElementById("output_unit").value];
+                circumference = circumference * translation[document.getElementById("input_unit").value][document.getElementById("output_unit").value];
+
+                area = area.toFixed(precision);
+                circumference = circumference.toFixed(precision);
+
+                document.getElementById("area").innerHTML = `${area} ${document.getElementById("output_unit").value}&#178`;
+                document.getElementById("circumference").innerHTML = `${circumference} ${document.getElementById("output_unit").value}`;
+            }
+            
             function get_results(){
                 let a = parseFloat(document.getElementById("a").value) || 0;
                 let b = parseFloat(document.getElementById("b").value) || 0;
 
                 console.log(a,b)
 
-                var xml = http("GET", `/php/square.php?a=${a}&b=${b}`);
+                var xml = http("GET", `php/calculator.php?type=square&a=${a}&b=${b}`);
 
                 if (xml.status == 200){
                     const results = JSON.parse(xml.response).results;
@@ -94,7 +115,15 @@
                 update_results(last_results.area, last_results.circumference);
             }
 
-            document.getElementById("unit").oninput = () => {
+            document.getElementById("input_unit").onchange = () => {
+                update_results(last_results.area, last_results.circumference);
+            }
+
+            document.getElementById("output_unit").onchange = () => {
+                update_results(last_results.area, last_results.circumference);
+            }
+
+            document.getElementById("precision").onchange = () => {
                 update_results(last_results.area, last_results.circumference);
             }
 
